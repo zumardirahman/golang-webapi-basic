@@ -55,19 +55,27 @@ func main() {
 		fmt.Println("================================")
 	}
 
+	err = db.Delete(&book).Error
+
+	if err != nil {
+		fmt.Println("================================")
+		fmt.Println("Error Deleting book record")
+		fmt.Println("================================")
+	}
+
 	// for _, b := range books {
 
 	// 	fmt.Println("title:", b.Title)
 	// 	fmt.Println("book object", b)
 	// }
 
-	book.Title = "Cari Pengalaman Perlu Pengalaman Juga"
-	err = db.Save(&book).Error
-	if err != nil {
-		fmt.Println("================================")
-		fmt.Println("Error Updating book record")
-		fmt.Println("================================")
-	}
+	// book.Title = "Cari Pengalaman Perlu Pengalaman Juga"
+	// err = db.Save(&book).Error
+	// if err != nil {
+	// 	fmt.Println("================================")
+	// 	fmt.Println("Error Updating book record")
+	// 	fmt.Println("================================")
+	// }
 
 	router := gin.Default()
 

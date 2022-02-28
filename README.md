@@ -55,3 +55,10 @@ To bind a request body into a type, use model binding. We currently support bind
 Gin uses https://github.com/go-playground/validator for validation. Check the full docs on tags usage https://godoc.org/github.com/go-playground/validator#hdr-Baked_In_Validators_and_Tags.
 
 Note that you need to set the corresponding binding tag on all fields you want to bind. For example, when binding from JSON, set json:"fieldname".
+
+## GORM
+Database Connection
+The fantastic ORM library for Golang, aims to be developer friendly.
+
+###  Geting Started
+GORM Guides https://gorm.io
