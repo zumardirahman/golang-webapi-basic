@@ -12,12 +12,15 @@ import (
 func main() {
 	router := gin.Default()
 
-	router.GET("/", rootHandler)
-	router.GET("/hello", helloHandler)
-	router.GET("/books/:id/:title", booksHandler) // :id akan dapat berubah
-	router.GET("/query", queryHandler)            // ex ?id=232
+	v1 := router.Group("/v1")
+	v1.GET("/", rootHandler)
+	v1.GET("/hello", helloHandler)
+	v1.GET("/books/:id/:title", booksHandler) // :id akan dapat berubah
+	v1.GET("/query", queryHandler)            // ex ?id=232
+	v1.POST("/books", postBooksHandler)
 
-	router.POST("/books", postBooksHandler)
+	v2 := router.Group("/v2")
+	v2.GET("/", v2RootHandler)
 
 	router.Run(":8888")
 }
@@ -28,6 +31,7 @@ func rootHandler(c *gin.Context) {
 		"bio":  "A Software Engineer",
 	})
 }
+
 func helloHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"title":    "Hello World",
@@ -55,7 +59,7 @@ func queryHandler(c *gin.Context) {
 
 type BookInput struct {
 	Title    string      `json:"title" binding:"required"`
-	Price    json.Number `json:"price" binding:"required"`
+	Price    json.Number `json:"price" binding:"required,number"`
 	SubTitle string      `json:"sub_title" binding:"required"`
 }
 
@@ -83,5 +87,12 @@ func postBooksHandler(c *gin.Context) {
 		"title":     bookInput.Title,
 		"price":     bookInput.Price,
 		"sub_title": bookInput.SubTitle,
+	})
+}
+
+func v2RootHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"nama": "Zumardi Rahman ver 2",
+		"bio":  "A Software Engineer Ver 2",
 	})
 }
