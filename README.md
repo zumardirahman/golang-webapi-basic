@@ -1,3 +1,20 @@
+# Getting Started
+
+This project was created by Go lang.
+
+### `go run main.go`
+
+Runs the app.\
+Open Postman or other to view API:
+- GET : http://localhost:8888/v1/books
+- GET : http://localhost:8888/v1/books/[id]
+- POST : http://localhost:8888/v1/books
+- PUT : http://localhost:8888/v1/books/[id]
+- DELETE : http://localhost:8888/v1/books/[id]
+
+The page manual reload server when you make changes.\
+You may also see any lint errors in the console.
+
 # The Go Programming Language
 
 Go is an open source programming language that makes it easy to build simple,
