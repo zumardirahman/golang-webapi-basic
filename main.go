@@ -31,10 +31,7 @@ func main() {
 	router := gin.Default()
 
 	v1 := router.Group("/v1")
-	v1.GET("/", bookHandler.RootHandler)
-	v1.GET("/hello", bookHandler.HelloHandler)
-	v1.GET("/books/:id/:title", bookHandler.BooksHandler) // :id akan dapat berubah
-	v1.GET("/query", bookHandler.QueryHandler)            // ex ?id=232
+	v1.GET("/books", bookHandler.GetBooks)
 
 	v1.POST("/books", bookHandler.PostBooksHandler)
 	//alur post data

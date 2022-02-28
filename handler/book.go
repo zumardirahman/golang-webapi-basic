@@ -18,35 +18,16 @@ func NewBookHandler(bookService book.Service) *bookHandler {
 	return &bookHandler{bookService}
 }
 
-func (h *bookHandler) RootHandler(c *gin.Context) { //public diawali huruf capital agar bisa dipanggil luar paket handler
-	c.JSON(http.StatusOK, gin.H{
-		"nama": "Zumardi Rahman",
-		"bio":  "A Software Engineer",
-	})
-}
+func (h *bookHandler) GetBooks(c *gin.Context) {
+	books, err := h.bookService.FindAll()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"errors": err,
+		})
+	}
 
-func (h *bookHandler) HelloHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"title":    "Hello World",
-		"subtitle": "My Golang Basic",
-	})
-}
-
-func (h *bookHandler) BooksHandler(c *gin.Context) {
-	id := c.Param("id") //parameter
-	title := c.Param("title")
-	c.JSON(http.StatusOK, gin.H{
-		"id":    id,
-		"title": title,
-	})
-}
-
-func (h *bookHandler) QueryHandler(c *gin.Context) {
-	title := c.Query("title") //query string
-	price := c.Query("price")
-	c.JSON(http.StatusOK, gin.H{
-		"title": title,
-		"price": price,
+		"data": books,
 	})
 }
 

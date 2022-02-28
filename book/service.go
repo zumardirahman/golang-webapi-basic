@@ -17,7 +17,6 @@ func NewService(repository Repository) *service {
 func (s *service) FindAll() ([]Book, error) {
 	books, err := s.repository.FindAll()
 	return books, err
-	// return s.repository.FindAll()
 }
 
 func (s *service) FindByID(ID int) (Book, error) {
