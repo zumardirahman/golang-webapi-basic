@@ -55,7 +55,7 @@ func queryHandler(c *gin.Context) {
 
 type BookInput struct {
 	Title    string      `json:"title" binding:"required"`
-	Price    json.Number `json:"price" binding:"required,number"`
+	Price    json.Number `json:"price" binding:"required"`
 	SubTitle string      `json:"sub_title" binding:"required"`
 }
 
@@ -66,10 +66,14 @@ func postBooksHandler(c *gin.Context) {
 	if err != nil {
 		//log.Fatal(err) //serber mati
 
+		errorMessages := []string{}
 		for _, e := range err.(validator.ValidationErrors) { //menampilkan erorr validation
 			errorMessage := fmt.Sprintf("Error on field %s, condition: %s", e.Field(), e.ActualTag())
+			errorMessages = append(errorMessages, errorMessage)
 
-			c.JSON(http.StatusBadRequest, errorMessage)
+			c.JSON(http.StatusBadRequest, gin.H{
+				"errors": errorMessages,
+			})
 			return
 		}
 
