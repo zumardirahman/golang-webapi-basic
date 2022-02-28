@@ -41,6 +41,13 @@ places to ask questions about the Go language.
 [rf]: https://reneefrench.blogspot.com/
 [cc3-by]: https://creativecommons.org/licenses/by/3.0/
 
+## Gin Web Framework
+
+Build Status codecov Go Report Card GoDoc Join the chat at https://gitter.im/gin-gonic/gin Sourcegraph Open Source Helpers Release TODOs
+
+Gin is a web framework written in Go (Golang). It features a martini-like API with performance that is up to 40 times faster thanks to httprouter. If you need performance and good productivity, you will love Gin.
+
+https://github.com/gin-gonic/gin
 
 ## Model binding and validation
 To bind a request body into a type, use model binding. We currently support binding of JSON, XML, YAML and standard form values (foo=bar&boo=baz).
