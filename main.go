@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -24,6 +25,22 @@ func main() {
 
 	//fmt.Println("Database Berhasil Terhubung")
 	db.AutoMigrate(&book.Book{})
+	//CRUD
+
+	book := book.Book{}
+	book.Title = "Cari Pengalaman"
+	book.Price = 90000
+	book.Discount = 10
+	book.Rating = 5
+	book.Description = "ini adalah buku yang sangat bagus dari zumardi rahman"
+
+	err = db.Create(&book).Error
+
+	if err != nil {
+		fmt.Println("================================")
+		fmt.Println("Error vreating book record")
+		fmt.Println("================================")
+	}
 
 	router := gin.Default()
 
