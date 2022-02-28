@@ -26,6 +26,7 @@ func main() {
 	db.AutoMigrate(&book.Book{})
 
 	bookRepository := book.NewRepository(db)
+	bookService := book.NewService(bookRepository)
 
 	// books, err := bookRepository.FindAll()
 
@@ -37,15 +38,22 @@ func main() {
 
 	// fmt.Println("Title:", book.Title)
 
-	book := book.Book{
-		Title:       "One Hundred Dolar",
-		Description: "Buku Terpopular",
-		Price:       890000,
-		Rating:      5,
-		Discount:    2,
+	// book := book.Book{
+	// 	Title:       "One Hundred Dolar",
+	// 	Description: "Buku Terpopular",
+	// 	Price:       890000,
+	// 	Rating:      5,
+	// 	Discount:    2,
+	// }
+
+	bookRequest := book.BookRequest{
+		Title: "Manusia Super",
+		Price: "45000",
 	}
 
-	bookRepository.Create(book)
+	// bookRepository.Create(book)
+
+	bookService.Create(bookRequest)
 
 	//CRUD
 
@@ -124,7 +132,8 @@ func v2RootHandler(c *gin.Context) {
 //Layer GO
 //
 //1. Main
-//2. Service
-//3. Repository
-//4. DB
-//5. MySql
+//2. Handler
+//3. Service
+//4. Repository
+//5. DB
+//6. MySql
