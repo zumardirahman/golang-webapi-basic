@@ -2,6 +2,10 @@
 
 This project was created by Go lang.
 
+First create database name "pustaka-api"
+
+and then
+
 ### `go run main.go`
 
 Runs the app.\
