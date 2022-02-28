@@ -33,8 +33,10 @@ func main() {
 	v1 := router.Group("/v1")
 	v1.GET("/books", bookHandler.GetBooks)
 	v1.GET("/books/:id", bookHandler.GetBook) // :id akan dapat berubah
+	v1.PUT("/books/:id", bookHandler.UpdateBook)
+	v1.DELETE("/books/:id", bookHandler.DeleteBook)
 
-	v1.POST("/books", bookHandler.PostBooksHandler)
+	v1.POST("/books", bookHandler.CreateBook)
 	//alur post data
 	//ke PostBooksHandler (/handler/book.go/PostBooksHandler)
 
