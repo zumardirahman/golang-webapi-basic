@@ -42,12 +42,12 @@ func main() {
 	// 	fmt.Println("================================")
 	// }
 
-	//	var book book.Book
-	var books []book.Book
+	var book book.Book
+	// var books []book.Book
 
 	//err = db.Debug().First(&book,2).Error //mengambil primary key
 	// err = db.Debug().Find(&books).Error //mengambil bnyak data
-	err = db.Debug().Where("rating = ?", 5).Find(&books).Error //mengambil wehere
+	err = db.Debug().Where("id = ?", 1).First(&book).Error //mengambil wehere
 
 	if err != nil {
 		fmt.Println("================================")
@@ -55,10 +55,18 @@ func main() {
 		fmt.Println("================================")
 	}
 
-	for _, b := range books {
+	// for _, b := range books {
 
-		fmt.Println("title:", b.Title)
-		fmt.Println("book object", b)
+	// 	fmt.Println("title:", b.Title)
+	// 	fmt.Println("book object", b)
+	// }
+
+	book.Title = "Cari Pengalaman Perlu Pengalaman Juga"
+	err = db.Save(&book).Error
+	if err != nil {
+		fmt.Println("================================")
+		fmt.Println("Error Updating book record")
+		fmt.Println("================================")
 	}
 
 	router := gin.Default()
