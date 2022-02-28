@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"pustaka-api/book"
 	"pustaka-api/handler"
@@ -22,111 +21,26 @@ func main() {
 		log.Fatal("Db Erorr")
 	}
 
-	//fmt.Println("Database Berhasil Terhubung")
 	db.AutoMigrate(&book.Book{})
 
 	bookRepository := book.NewRepository(db)
 	bookService := book.NewService(bookRepository)
 
-	// books, err := bookRepository.FindAll()
-
-	// for _, book := range books {
-	// 	fmt.Println("Title:", book.Title)
-	// }
-
-	// book, err := bookRepository.FindByID(3)
-
-	// fmt.Println("Title:", book.Title)
-
-	// book := book.Book{
-	// 	Title:       "One Hundred Dolar",
-	// 	Description: "Buku Terpopular",
-	// 	Price:       890000,
-	// 	Rating:      5,
-	// 	Discount:    2,
-	// }
-
-	bookRequest := book.BookRequest{
-		Title: "Manusia Super",
-		Price: "45000",
-	}
-
-	// bookRepository.Create(book)
-
-	bookService.Create(bookRequest)
-
-	//CRUD
-
-	// book := book.Book{}
-	// book.Title = "Cari Pengalaman"
-	// book.Price = 90000
-	// book.Discount = 10
-	// book.Rating = 5
-	// book.Description = "ini adalah buku yang sangat bagus dari zumardi rahman"
-
-	// err = db.Create(&book).Error
-
-	// if err != nil {
-	// 	fmt.Println("================================")
-	// 	fmt.Println("Error vreating book record")
-	// 	fmt.Println("================================")
-	// }
-
-	// var book book.Book
-	// var books []book.Book
-
-	//err = db.Debug().First(&book,2).Error //mengambil primary key
-	// err = db.Debug().Find(&books).Error //mengambil bnyak data
-	// err = db.Debug().Where("id = ?", 1).First(&book).Error //mengambil wehere
-
-	// if err != nil {
-	// 	fmt.Println("================================")
-	// 	fmt.Println("Error Finding book record")
-	// 	fmt.Println("================================")
-	// }
-
-	// err = db.Delete(&book).Error
-
-	// if err != nil {
-	// 	fmt.Println("================================")
-	// 	fmt.Println("Error Deleting book record")
-	// 	fmt.Println("================================")
-	// }
-
-	// for _, b := range books {
-
-	// 	fmt.Println("title:", b.Title)
-	// 	fmt.Println("book object", b)
-	// }
-
-	// book.Title = "Cari Pengalaman Perlu Pengalaman Juga"
-	// err = db.Save(&book).Error
-	// if err != nil {
-	// 	fmt.Println("================================")
-	// 	fmt.Println("Error Updating book record")
-	// 	fmt.Println("================================")
-	// }
+	bookHandler := handler.NewBookHandler(bookService)
 
 	router := gin.Default()
 
 	v1 := router.Group("/v1")
-	v1.GET("/", handler.RootHandler)
-	v1.GET("/hello", handler.HelloHandler)
-	v1.GET("/books/:id/:title", handler.BooksHandler) // :id akan dapat berubah
-	v1.GET("/query", handler.QueryHandler)            // ex ?id=232
-	v1.POST("/books", handler.PostBooksHandler)
+	v1.GET("/", bookHandler.RootHandler)
+	v1.GET("/hello", bookHandler.HelloHandler)
+	v1.GET("/books/:id/:title", bookHandler.BooksHandler) // :id akan dapat berubah
+	v1.GET("/query", bookHandler.QueryHandler)            // ex ?id=232
 
-	v2 := router.Group("/v2")
-	v2.GET("/", v2RootHandler)
+	v1.POST("/books", bookHandler.PostBooksHandler)
+	//alur post data
+	//ke PostBooksHandler (/handler/book.go/PostBooksHandler)
 
 	router.Run(":8888")
-}
-
-func v2RootHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"nama": "Zumardi Rahman ver 2",
-		"bio":  "A Software Engineer Ver 2",
-	})
 }
 
 //Layer GO
