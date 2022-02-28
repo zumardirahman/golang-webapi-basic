@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -25,6 +24,29 @@ func main() {
 
 	//fmt.Println("Database Berhasil Terhubung")
 	db.AutoMigrate(&book.Book{})
+
+	bookRepository := book.NewRepository(db)
+
+	// books, err := bookRepository.FindAll()
+
+	// for _, book := range books {
+	// 	fmt.Println("Title:", book.Title)
+	// }
+
+	// book, err := bookRepository.FindByID(3)
+
+	// fmt.Println("Title:", book.Title)
+
+	book := book.Book{
+		Title:       "One Hundred Dolar",
+		Description: "Buku Terpopular",
+		Price:       890000,
+		Rating:      5,
+		Discount:    2,
+	}
+
+	bookRepository.Create(book)
+
 	//CRUD
 
 	// book := book.Book{}
@@ -42,26 +64,26 @@ func main() {
 	// 	fmt.Println("================================")
 	// }
 
-	var book book.Book
+	// var book book.Book
 	// var books []book.Book
 
 	//err = db.Debug().First(&book,2).Error //mengambil primary key
 	// err = db.Debug().Find(&books).Error //mengambil bnyak data
-	err = db.Debug().Where("id = ?", 1).First(&book).Error //mengambil wehere
+	// err = db.Debug().Where("id = ?", 1).First(&book).Error //mengambil wehere
 
-	if err != nil {
-		fmt.Println("================================")
-		fmt.Println("Error Finding book record")
-		fmt.Println("================================")
-	}
+	// if err != nil {
+	// 	fmt.Println("================================")
+	// 	fmt.Println("Error Finding book record")
+	// 	fmt.Println("================================")
+	// }
 
-	err = db.Delete(&book).Error
+	// err = db.Delete(&book).Error
 
-	if err != nil {
-		fmt.Println("================================")
-		fmt.Println("Error Deleting book record")
-		fmt.Println("================================")
-	}
+	// if err != nil {
+	// 	fmt.Println("================================")
+	// 	fmt.Println("Error Deleting book record")
+	// 	fmt.Println("================================")
+	// }
 
 	// for _, b := range books {
 
@@ -98,3 +120,11 @@ func v2RootHandler(c *gin.Context) {
 		"bio":  "A Software Engineer Ver 2",
 	})
 }
+
+//Layer GO
+//
+//1. Main
+//2. Service
+//3. Repository
+//4. DB
+//5. MySql
