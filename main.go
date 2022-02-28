@@ -32,6 +32,7 @@ func main() {
 
 	v1 := router.Group("/v1")
 	v1.GET("/books", bookHandler.GetBooks)
+	v1.GET("/books/:id", bookHandler.GetBook) // :id akan dapat berubah
 
 	v1.POST("/books", bookHandler.PostBooksHandler)
 	//alur post data
